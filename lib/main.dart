@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sigpe/vistas/comun/home.dart';
 
 void main() => runApp(const AppSigpe());
 
@@ -10,7 +11,7 @@ class AppSigpe extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "APP SIgpe Flutter",
+        title: "APP Sigpe Flutter",
         home: BarraPrincipal());
   }
 }
@@ -20,27 +21,25 @@ class BarraPrincipal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text(
-          'Barra Principal',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Container(
-        child: Card(
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 125,
-                width: 100,
-                child: ClipRRect(borderRadius: BorderRadius.circular(10)),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    return DefaultTabController(
+        length: 4,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.orange,
+              title: Text(
+                'Barra Principal',
+                style: TextStyle(color: Colors.white),
+              ),
+              bottom: TabBar(
+                  indicatorColor: Colors.white,
+                  labelColor: Colors.white,
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home),
+                      text: "Principal",
+                    )
+                  ]),
+            ),
+            body: TabBarView(children: [HomeView()])));
   }
 }
