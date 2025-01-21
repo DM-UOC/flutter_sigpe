@@ -99,9 +99,12 @@ class RecipeForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // * variable global...
+    final _formKey = GlobalKey<FormState>();
     return Padding(
         padding: EdgeInsets.all(8),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment
                 .start, // * alineación verifical - iniciando desde el principio
@@ -116,7 +119,19 @@ class RecipeForm extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              _buildTextField(label: 'Recipe Name')
+              _buildTextField(label: 'Recipe Name'),
+              SizedBox(
+                height: 16,
+              ),
+              _buildTextField(label: 'Autor'),
+              SizedBox(
+                height: 16,
+              ),
+              _buildTextField(label: 'Url imagen'),
+              SizedBox(
+                height: 16,
+              ),
+              _buildTextField(label: 'Receta')
             ],
           ),
         ));
