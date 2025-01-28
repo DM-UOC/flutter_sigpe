@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
+import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
 
 import 'package:flutter_sigpe/vistas/comun/home_screen.dart';
 
@@ -54,29 +55,22 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final response = await http.get(
-        Uri.parse('http://10.4.1.95:3005/api-seg/personas/soporte')
-            .replace(queryParameters: {
-          'usuario': _usuarioController.text,
-          'password': _passwordController.text,
-        }),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      final responseData = jsonDecode(response.body);
+      var response =
+          await context.read<SeguridadProvider>().loginUsuarioInterno(
+                _usuarioController.text.trim(),
+                _passwordController.text.trim(),
+              );
       // * validación de status de respuesta...
       if (response.statusCode == 200) {
         // * Login exitoso...
-        final token = responseData['token'];
+        // * final token = responseData['token'];
 
         // *** Guardar token y navegar a home
         _navigateToHome();
       } else {
-        // Mostrar error
-        _showError(responseData['message'] ?? 'Error desconocido');
+        // * Mostrar error...
+        _showError(response['message'] ?? 'Error desconocido');
       }
-    } on http.ClientException catch (e) {
-      _showError('Error de conexión: ${e.message}');
     } catch (e) {
       _showError('Error inesperado: $e');
     } finally {

@@ -5,10 +5,34 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "flutter_sigpe",
+      "name": "local_flutter_sigpe",
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
+      "args": [
+        "--dart-define-from-file",
+        ".env/local.env"        
+      ]
     },
+    {
+      "name": "development_flutter_sigpe",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "--dart-define-from-file",
+        ".env/development.env"        
+      ]
+    },
+    {
+      "name": "production_flutter_sigpe",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": [
+        "--dart-define-from-file",
+        ".env/production.env"        
+      ]
+    },        
   ]
 }

@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_sigpe/vistas/comun/home_screen.dart';
 import 'package:flutter_sigpe/vistas/comun/login_screen.dart';
 
-void main() => runApp(const AppSigpe());
+import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
+
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => SeguridadProvider())],
+      child: const AppSigpe(),
+    ),
+  );
+}
 
 // * fstless -> snipet que permite crear una clase dinámica...
 class AppSigpe extends StatelessWidget {
@@ -10,10 +21,14 @@ class AppSigpe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final seguridadProvider = context.watch<SeguridadProvider>();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Sigpe VF",
-      home: const LoginScreen(),
+      title: "Sigpe V3",
+      home: seguridadProvider.usuario != null
+          ? const HomeScreen()
+          : const LoginScreen(),
     ); // * BarraPrincipal());
   }
 }
