@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sigpe/vistas/comun/home.dart';
+
+import 'package:flutter_sigpe/vistas/comun/login_screen.dart';
 
 void main() => runApp(const AppSigpe());
 
@@ -10,36 +11,9 @@ class AppSigpe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "APP Sigpe Flutter",
-        home: BarraPrincipal());
-  }
-}
-
-class BarraPrincipal extends StatelessWidget {
-  const BarraPrincipal({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 4,
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.orange,
-              title: Text(
-                'Barra Principal',
-                style: TextStyle(color: Colors.white),
-              ),
-              bottom: TabBar(
-                  indicatorColor: Colors.white,
-                  labelColor: Colors.white,
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.home),
-                      text: "Principal",
-                    )
-                  ]),
-            ),
-            body: TabBarView(children: [HomeView()])));
+      debugShowCheckedModeBanner: false,
+      title: "Sigpe VF",
+      home: const LoginScreen(),
+    ); // * BarraPrincipal());
   }
 }

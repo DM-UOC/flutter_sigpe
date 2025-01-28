@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+// * referencia al paquete http...
+import 'package:http/http.dart' as http;
+// * referenia a la librería jsonDecode...
+import 'dart:convert';
+
+import 'package:flutter_sigpe/vistas/detalle/detalle_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +31,21 @@ class HomeView extends StatelessWidget {
     );
   }
 
+/**
+ * Por el momento se declara el tipo lista que retorna elementos dinamicos...
+ * posteriormete se actualizará el método para que devuelva el elemento requerido o su tipo exacto...
+ *  */
+  Future<List<dynamic>> fetchRecipes() async {
+    // Android 10.0.2.2
+    // IOS 127.0.0.1
+    // WEB
+    final url = Uri.parse(
+        'http://10.4.1.95:3005/api-seg/personas/soporte?usuario=martinezd&password=_31di3**mAr74_');
+    final response = await http.get(url);
+    final data = jsonDecode(response.body);
+    return data['recipes'];
+  }
+
   Future<void> _showBottom(BuildContext context) {
     return showModalBottomSheet(
         context: context,
@@ -39,11 +61,17 @@ class HomeView extends StatelessWidget {
 
   /// * Widget
   /// TODO: Método que será dinámico para retornar un listado...
-  Widget _RecipesCard(BuildContext buildContext) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+  Widget _RecipesCard(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DetalleView(context, recipeName: "Lasagna")));
+      },
       child: SizedBox(
-        width: MediaQuery.of(buildContext).size.width,
+        width: MediaQuery.of(context).size.width,
         height: 125,
         child: Card(
           child: Row(
