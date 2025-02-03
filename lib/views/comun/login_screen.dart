@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
 import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
+import 'package:flutter_sigpe/providers/comun/utilitarios_provider.dart';
 
-import 'package:flutter_sigpe/vistas/comun/home_screen.dart';
+import 'package:flutter_sigpe/views/comun/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,8 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
         // *** Guardar token y navegar a home
         _navigateToHome();
       } else {
+        // * recuperamos el error en formato json
+        final responseData =
+            UtilitariosProvider.retornaJSONDecode(response.body);
         // * Mostrar error...
-        _showError(response['message'] ?? 'Error desconocido');
+        _showError(responseData['message'] ?? 'Error desconocido');
       }
     } catch (e) {
       _showError('Error inesperado: $e');

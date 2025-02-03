@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 class UtilitariosProvider extends ChangeNotifier {
-  static _retornaJSONDecode(valorTransformar) {
+  static retornaJSONDecode(valorTransformar) {
     return jsonDecode(valorTransformar);
   }
 }

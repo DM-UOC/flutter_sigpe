@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sigpe/providers/comun/generic_http_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_sigpe/vistas/comun/home_screen.dart';
-import 'package:flutter_sigpe/vistas/comun/login_screen.dart';
+import 'package:flutter_sigpe/views/comun/home_screen.dart';
+import 'package:flutter_sigpe/views/comun/login_screen.dart';
 
 import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => SeguridadProvider())],
+      providers: [
+        Provider<GenericHttpProvider>(
+          create: (context) => GenericHttpProvider(),
+        ),
+        ChangeNotifierProvider(
+            create: (context) => SeguridadProvider(
+                  genericHttpProvider: context.read(),
+                ))
+      ],
       child: const AppSigpe(),
     ),
   );
