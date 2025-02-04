@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
-import 'package:flutter_sigpe/providers/comun/utilitarios_provider.dart';
 
 import 'package:flutter_sigpe/views/comun/home_screen.dart';
 
@@ -55,25 +54,11 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      var response =
+      final response =
           await context.read<SeguridadProvider>().loginUsuarioInterno(
                 _usuarioController.text.trim(),
                 _passwordController.text.trim(),
               );
-      // * validación de status de respuesta...
-      if (response.statusCode == 200) {
-        // * Login exitoso...
-        // * final token = responseData['token'];
-
-        // *** Guardar token y navegar a home
-        _navigateToHome();
-      } else {
-        // * recuperamos el error en formato json
-        final responseData =
-            UtilitariosProvider.retornaJSONDecode(response.body);
-        // * Mostrar error...
-        _showError(responseData['message'] ?? 'Error desconocido');
-      }
     } catch (e) {
       _showError('Error inesperado: $e');
     } finally {

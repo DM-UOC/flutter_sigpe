@@ -39,6 +39,7 @@ dependencies:
   provider: ^6.1.2
   encrypt: ^5.0.3
   dio: ^5.8.0+1
+  flutter_secure_storage: ^4.2.1
 
 dev_dependencies:
   flutter_test:

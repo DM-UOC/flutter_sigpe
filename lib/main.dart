@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sigpe/providers/comun/generic_http_provider.dart';
+import 'package:flutter_sigpe/services/comun/generic_http_service.dart';
+import 'package:flutter_sigpe/services/seguridad/seguridad_service.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_sigpe/views/comun/home_screen.dart';
@@ -11,13 +12,12 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        Provider<GenericHttpProvider>(
-          create: (context) => GenericHttpProvider(),
-        ),
+        Provider(
+            create: (context) =>
+                SeguridadService(genericHttpService: GenericHttpService())),
         ChangeNotifierProvider(
-            create: (context) => SeguridadProvider(
-                  genericHttpProvider: context.read(),
-                ))
+            create: (context) =>
+                SeguridadProvider(context.read<SeguridadService>()))
       ],
       child: const AppSigpe(),
     ),
