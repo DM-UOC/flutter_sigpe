@@ -1,21 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_sigpe/models/usuario/usuario_model.dart';
 import 'package:flutter_sigpe/services/comun/generic_http_service.dart';
 
 import 'package:flutter_sigpe/providers/comun/urilitarios_seguridad_provider.dart';
-import 'package:flutter_sigpe/services/utilitarios/utilitarios_storage.dart';
+import 'package:flutter_sigpe/services/utilitarios/utilitarios_storage_service.dart';
 
 class SeguridadService {
-  final FlutterSecureStorage flutterSecureStorage;
   final GenericHttpService _genericHttpService;
   Usuario? _usuario;
-  final bool _isLoading = false;
 
-  SeguridadService(
-      {required GenericHttpService genericHttpService,
-      required this.flutterSecureStorage})
+  SeguridadService({required GenericHttpService genericHttpService})
       : _genericHttpService = genericHttpService;
 
   static const restApiUrl = String.fromEnvironment('REST_API_SEGURIDAD');
@@ -27,12 +22,13 @@ class SeguridadService {
     // * recoge el token generado...
     final token = jsonDecode(respuesta.body)[tokenName];
     // * almacena en el storage...
-    await UtilitariosStorage.almacenar(tokenName, token);
+    await UtilitariosStorageService.almacenar(tokenName, token);
+    // * recuperamos los perfiles...
     // * retorno true...
     return true;
   }
 
-  Future<bool> loginUsuarioInterno(String usuario, String password) async {
+  Future<dynamic> loginUsuarioInterno(String usuario, String password) async {
     try {
       // * codificando las variables...
       var usuarioCod = UtilitariosSeguridadProvider.codificar(usuario);
@@ -51,6 +47,6 @@ class SeguridadService {
   }
 
   Future<void> logout() async {
-    UtilitariosStorage.eliminar(tokenName);
+    UtilitariosStorageService.eliminar(tokenName);
   }
 }

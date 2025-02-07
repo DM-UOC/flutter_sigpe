@@ -54,13 +54,17 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
+      // * consulta...
       final response =
           await context.read<SeguridadProvider>().loginUsuarioInterno(
                 _usuarioController.text.trim(),
                 _passwordController.text.trim(),
               );
+      // * todo ok...
+      // * navega al home...
+      if (response) _navigateToHome();
     } catch (e) {
-      _showError('Error inesperado: $e');
+      _showError('Error: ${e.toString()} ');
     } finally {
       setState(() => _isLoading = false);
     }

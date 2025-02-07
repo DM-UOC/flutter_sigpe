@@ -1,7 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class UtilitariosStorage {
-  static late final FlutterSecureStorage flutterSecureStorage;
+class UtilitariosStorageService {
+  static const flutterSecureStorage = FlutterSecureStorage();
+
   static Future<void> almacenar(String key, value) async {
     await flutterSecureStorage.write(key: key, value: value);
   }

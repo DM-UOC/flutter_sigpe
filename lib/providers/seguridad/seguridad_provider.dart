@@ -3,49 +3,57 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_sigpe/models/usuario/usuario_model.dart';
 
 import 'package:flutter_sigpe/services/seguridad/seguridad_service.dart';
+import 'package:flutter_sigpe/services/utilitarios/utilitarios_storage_service.dart';
 
 class SeguridadProvider extends ChangeNotifier {
   final SeguridadService _seguridadService;
+  bool _isLoggedIn = false;
   bool _isLoading = false;
+  String? _errorMessage;
+  static const tokenName = String.fromEnvironment('TOKEN_KEY');
 
   Usuario? _usuario;
   Usuario? get usuario => _usuario;
+  bool get isLoggedIn => _isLoggedIn;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
-  SeguridadProvider(this._seguridadService);
+  SeguridadProvider(this._seguridadService) {
+    verificaLoginEstado();
+  }
 
-  Future<bool> loginUsuarioInterno(String usuario, String password) async {
+  Future<void> verificaLoginEstado() async {
+    final token = await UtilitariosStorageService.retornar(tokenName);
+    _isLoggedIn = token != null;
+    notifyListeners();
+  }
+
+  Future<dynamic> loginUsuarioInterno(String usuario, String password) async {
     _isLoading = true;
-    notifyListeners(); // Update UI
+    _errorMessage = null;
+    notifyListeners();
     try {
-      final respuesta = true;
       // * verifica login interno...
-      final response = _seguridadService.loginUsuarioInterno(usuario, password);
-      // * verifia si  todo ha ido bien...
-      if (response.statusCode == 200) {
-        // * almacena el token...
-        // * recupera los perfiles de permiso...
-        // * almacena los perfiles...
-      }
-
+      final respuesta =
+          _seguridadService.loginUsuarioInterno(usuario, password);
       // * inactiva al roller del botón...
       _isLoading = false;
       // * notifiaca a los usuario...
       notifyListeners();
+      // * retorna información...
       return respuesta;
     } catch (e) {
       rethrow;
     }
   }
 
-  almacenData() {
-    try {} catch (e) {
-      rethrow;
-    }
-  }
-
   // * Cerrar sesión
   void logout() {
+    // * objeto null...
     _usuario = null;
+    // * eliminando token...
+    _seguridadService.logout();
+    // * notificación de cambio...
     notifyListeners();
   }
 }
