@@ -1,3 +1,4 @@
 {
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "deepseek.apiKey": "sk-e0bfe6e629294ba092c8ac2323050bf3"
 }
