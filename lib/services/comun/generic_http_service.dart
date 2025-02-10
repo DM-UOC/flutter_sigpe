@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_sigpe/services/comun/exception_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter_sigpe/interfaces/oersistencia/post_persistencia_abstract.dart';
-import 'package:flutter_sigpe/interfaces/oersistencia/get_persistencia_abstract.dart';
+import 'package:flutter_sigpe/interfaces/persistencia/post_persistencia_abstract.dart';
+import 'package:flutter_sigpe/interfaces/persistencia/get_persistencia_abstract.dart';
 
 class GenericHttpService<O, R> implements IGetPersistencia, IPostPersistencia {
   static const headers = {'Content-Type': 'application/json'};

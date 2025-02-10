@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sigpe/models/comun/usuario_login.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_sigpe/interfaces/comun/login_interno.abstract.dart';
 
 import 'package:flutter_sigpe/providers/seguridad/seguridad_provider.dart';
 
@@ -55,11 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       // * consulta...
-      final response =
-          await context.read<SeguridadProvider>().loginUsuarioInterno(
-                _usuarioController.text.trim(),
-                _passwordController.text.trim(),
-              );
+      final response = await context
+          .read<SeguridadProvider>()
+          .loginUsuarioInterno(UserLogin(
+              usuario: _usuarioController.text.trim(),
+              password: _passwordController.text.trim()));
       // * todo ok...
       // * navega al home...
       if (response) _navigateToHome();

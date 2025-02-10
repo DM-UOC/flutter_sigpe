@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_sigpe/interfaces/comun/login_interno.abstract.dart';
+import 'package:flutter_sigpe/models/comun/usuario_login.dart';
 
 import 'package:flutter_sigpe/models/usuario/usuario_model.dart';
 
@@ -28,14 +30,13 @@ class SeguridadProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> loginUsuarioInterno(String usuario, String password) async {
+  Future<dynamic> loginUsuarioInterno(UserLogin userLogin) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
     try {
       // * verifica login interno...
-      final respuesta =
-          _seguridadService.loginUsuarioInterno(usuario, password);
+      final respuesta = _seguridadService.loginUsuarioInterno(userLogin);
       // * inactiva al roller del botón...
       _isLoading = false;
       // * notifiaca a los usuario...

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import 'package:flutter_sigpe/interfaces/oersistencia/post_persistencia_abstract.dart';
-import 'package:flutter_sigpe/interfaces/oersistencia/get_persistencia_abstract.dart';
+import 'package:flutter_sigpe/interfaces/persistencia/post_persistencia_abstract.dart';
+import 'package:flutter_sigpe/interfaces/persistencia/get_persistencia_abstract.dart';
 
 class GenericHttpProvider<O, R> implements IGetPersistencia, IPostPersistencia {
   @override

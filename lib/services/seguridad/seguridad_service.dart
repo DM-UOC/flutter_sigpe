@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_sigpe/interfaces/comun/login_interno.abstract.dart';
+import 'package:flutter_sigpe/models/comun/usuario_login.dart';
 import 'package:flutter_sigpe/models/usuario/usuario_model.dart';
 import 'package:flutter_sigpe/services/comun/generic_http_service.dart';
 
@@ -28,11 +30,13 @@ class SeguridadService {
     return true;
   }
 
-  Future<dynamic> loginUsuarioInterno(String usuario, String password) async {
+  Future<dynamic> loginUsuarioInterno(UserLogin userLogin) async {
     try {
       // * codificando las variables...
-      var usuarioCod = UtilitariosSeguridadProvider.codificar(usuario);
-      var passwordCod = UtilitariosSeguridadProvider.codificar(password);
+      var usuarioCod =
+          UtilitariosSeguridadProvider.codificar(userLogin.usuario);
+      var passwordCod =
+          UtilitariosSeguridadProvider.codificar(userLogin.password);
       // * retorna consulta...
       final respuesta = await _genericHttpService.post(
           '${restApiUrl}autenticaciones/ingreso',
